@@ -1,4 +1,5 @@
 import { apiClient } from './api.ts'
+import { API_ENDPOINTS } from '../config/api.config.ts'
 import type { LoginPayload, LoginResponse, SuperAdminUser } from '../interface/auth.types.ts'
 
 const TOKEN_KEY = 'sribees_super_token'
@@ -6,7 +7,7 @@ const USER_KEY = 'sribees_super_user'
 
 export const authService = {
   async login(payload: LoginPayload): Promise<LoginResponse> {
-    const res = await apiClient<LoginResponse>('/api/v1/auth/login', {
+    const res = await apiClient<LoginResponse>(API_ENDPOINTS.AUTH.LOGIN, {
       method: 'POST',
       body: JSON.stringify(payload),
     })

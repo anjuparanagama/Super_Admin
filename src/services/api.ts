@@ -1,4 +1,4 @@
-const BASE_URL = ''
+import { API_BASE_URL } from '../config/api.config.ts'
 
 export interface ApiErrorResponse {
   detail?: string | { msg?: string }[]
@@ -31,7 +31,9 @@ export async function apiClient<T>(
     headers.set('Authorization', `Bearer ${token}`)
   }
 
-  const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`
+  const url = endpoint.startsWith('http')
+    ? endpoint
+    : `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
 
   const response = await fetch(url, {
     ...options,

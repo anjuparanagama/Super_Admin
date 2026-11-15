@@ -1,4 +1,5 @@
 import { apiClient } from './api.ts'
+import { API_ENDPOINTS } from '../config/api.config.ts'
 import type {
   ActivityFilterParams,
   ActivityLog,
@@ -21,11 +22,13 @@ export const activityService = {
     if (params.to_date) searchParams.set('to_date', params.to_date)
 
     const qs = searchParams.toString()
-    return apiClient<ActivityLogListResponse>(`/api/v1/super-admin/activity-logs${qs ? `?${qs}` : ''}`)
+    return apiClient<ActivityLogListResponse>(
+      `${API_ENDPOINTS.SUPER_ADMIN.ACTIVITY_LOGS}${qs ? `?${qs}` : ''}`
+    )
   },
 
   async getActivityStats(): Promise<ActivityStatsResponse> {
-    return apiClient<ActivityStatsResponse>('/api/v1/super-admin/activity-logs/stats')
+    return apiClient<ActivityStatsResponse>(API_ENDPOINTS.SUPER_ADMIN.ACTIVITY_STATS)
   },
 
   exportToCsv(logs: ActivityLog[]): void {
